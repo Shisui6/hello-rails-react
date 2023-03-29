@@ -4,12 +4,32 @@ import "./controllers"
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './redux/configureStore.js';
+import Greeting from './components/Greeting.js';
+import App from './components/App.js';
 
-function App() {
-  return (<h1>Hello World!</h1>);
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+    children: [
+      {
+        path: '/',
+        element: <Greeting />,
+      },
+    ],
+  },
+]);
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('root'),
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </React.StrictMode>
 );
